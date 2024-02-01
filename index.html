@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastercard payment service</title>
+    <style>
+        /* Basic Reset */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f7f6;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 400px;
+            margin: 30px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1); /* Shadow effect */
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        header img {
+            width: 80px; /* Logo size adjustment */
+            height: 80px;
+        }
+        #invoice-summary h1 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+        #invoice-summary p {
+            color: #666;
+            font-size: 0.9em;
+        }
+        #amount-due {
+            margin-bottom: 10px;
+        }
+        #amount-due p {
+            font-size: 2em;
+            color: #333;
+        }
+        #payment-method form {
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        input[type="text"], select {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+        }
+        .button {
+            display: inline-block;
+            background: #28a745;
+            color: #ffffff;
+            padding: 10px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #999;
+        }
+        footer a {
+            color: #28a745;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="#" id="logo-link"><img src="https://w7.pngwing.com/pngs/397/885/png-transparent-logo-mastercard-product-font-mastercard-text-orange-logo.png" alt="HaiVE Tech Logo"></a>
+        </header>
+        
+        <main>
+            <section id="invoice-summary">
+                <h1>Mastercard Payment Service</h1>
+                <div id="amount-due">
+                    <p>$1007.42</p>
+                    <small>Due Feb 28, 2024</small>
+                </div>
+                <div id="invoice-details">
+                    <p>To: Jenny Rosen</p>
+                    <p>From: BOB the Builder</p>
+                    <p>Memo: Thank you for choosing Bob the Builder.</p>
+                </div>
+            </section>
+            
+            <section id="payment-method">
+                <form id="payment-form" onsubmit="return submitPayment(event)">
+                    <div id="card-option">
+                        <label for="card-number">Card Information</label>
+                        <input type="text" id="card-number" placeholder="1234 1234 1234 1234" required>
+                        <select id="card-expiry-month">
+                            <option value="" disabled selected>Month</option>
+                            <!-- Month options here -->
+                        </select>
+                        <select id="card-expiry-year">
+                            <option value="" disabled selected>Year</option>
+                            <!-- Year options here -->
+                        </select>
+                        <input type="text" id="card-cvc" placeholder="CVC" required>
+                    </div>
+                    <button type="submit" class="button">Pay $1007.42</button>
+                </form>
+            </section>
+        </main>
+        
+        <footer>
+            <p>Powered by Mastercard</p>
+            <a href="#">Terms</a> | <a href="#">Privacy</a>
+        </footer>
+    </div>
+
+    <script>
+    function submitPayment(event) {
+        event.preventDefault();
+        // Assuming the confirmation page is named 'confirmation.html'
+        window.location.href = 'confirmation.html';
+        return false;
+    }
+
+        // Script for auto-separator in card number input
+        document.getElementById('card-number').addEventListener('input', function (e) {
+            e.target.value = e.target.value.replace(/[^\dA-Z]/g, '').replace(/(.{4})/g, '$1 ').trim().substring(0, 19);
+        });
+
+        // Populate month and year dropdowns
+        const monthSelect = document.getElementById('card-expiry-month');
+        const yearSelect = document.getElementById('card-expiry-year');
+        for (let i = 1; i <= 12; i++) {
+            let month = i < 10 ? '0' + i : i;
+            let option = new Option(month, month);
+            monthSelect.add(option);
+        }
+        const currentYear = new Date().getFullYear();
+        for (let i = currentYear; i <= currentYear + 10; i++) {
+            let option = new Option(i, i);
+            yearSelect.add(option);
+        }
+    </script>
+</body>
+</html>
+
