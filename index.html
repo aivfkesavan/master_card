@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mastercard payment service</title>
+    <title>Payment Page</title>
     <style>
         /* Basic Reset */
         * {
@@ -86,20 +86,20 @@
 <body>
     <div class="container">
         <header>
-            <a href="#" id="logo-link"><img src="https://w7.pngwing.com/pngs/397/885/png-transparent-logo-mastercard-product-font-mastercard-text-orange-logo.png" alt="HaiVE Tech Logo"></a>
+            <a href="#" id="logo-link"><img src="https://w7.pngwing.com/pngs/397/885/png-transparent-logo-mastercard-product-font-mastercard-text-orange-logo.png" alt="masterpay Logo"></a>
         </header>
         
         <main>
             <section id="invoice-summary">
                 <h1>Mastercard Payment Service</h1>
                 <div id="amount-due">
-                    <p>$1007.42</p>
-                    <small>Due Feb 28, 2024</small>
+                    <p id="invoice-amount">$0.00</p>
+                    <small id="due-date">Due Date not set</small>
                 </div>
                 <div id="invoice-details">
-                    <p>To: Jenny Rosen</p>
-                    <p>From: BOB the Builder</p>
-                    <p>Memo: Thank you for choosing Bob the Builder.</p>
+                    <p id="to-customer">To: Not specified</p>
+                    <p id="from-company">From: Not specified</p>
+                    <p>Memo: Thank you.</p>
                 </div>
             </section>
             
@@ -118,7 +118,7 @@
                         </select>
                         <input type="text" id="card-cvc" placeholder="CVC" required>
                     </div>
-                    <button type="submit" class="button">Pay $1007.42</button>
+                    <button type="submit" class="button">Pay Now</button>
                 </form>
             </section>
         </main>
@@ -130,12 +130,22 @@
     </div>
 
     <script>
+        function getURLParameter(name) {
+            return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[null, ''])[1].replace(/\+/g, '%20'))||null;
+        }
+
     function submitPayment(event) {
         event.preventDefault();
         // Assuming the confirmation page is named 'confirmation.html'
         window.location.href = 'confirmation.html';
         return false;
     }
+
+        // Populate the fields from URL parameters
+        document.getElementById('to-customer').textContent = 'To: ' + getURLParameter('to') || 'Not specified';
+        document.getElementById('from-company').textContent = 'From: ' + getURLParameter('from') || 'Not specified';
+        document.getElementById('invoice-amount').textContent = '$' + (getURLParameter('amount') || '0.00');
+        document.getElementById('due-date').textContent = 'Due ' + (getURLParameter('duedate') || 'Date not set');
 
         // Script for auto-separator in card number input
         document.getElementById('card-number').addEventListener('input', function (e) {
@@ -158,4 +168,3 @@
     </script>
 </body>
 </html>
-
